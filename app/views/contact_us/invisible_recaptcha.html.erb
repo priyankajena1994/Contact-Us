@@ -1,0 +1,33 @@
+<%= form_for @contact_new, url: invisible_recaptcha_path, html: {id: 'invisible-recaptcha-form'} do |f| %>
+  <div class="alert alert-danger" style="color: red;">
+    <% if flash[:error].present?%>
+      <%= flash[:error]%>
+    <%end%>
+  </div>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+ 
+  <p>
+    <%= f.label :email %><br>
+    <%= f.email_field :email %>
+  </p>
+
+  <p>
+    <%= f.label :company_name %><br>
+    <%= f.text_field :company_name %>
+  </p>
+
+  <p>
+    <%= f.label :phone_number %><br>
+    <%= f.text_field :phone_number %>
+  </p>
+  <%= invisible_recaptcha_tags text: 'Submit' %>
+<% end %>
+
+<script type="text/javascript"> 
+  $(".g-recaptcha").click(function(){
+    $("#invisible-recaptcha-form").submit();
+  });
+</script>

@@ -1,0 +1,76 @@
+<%= form_for @contact, url: contact_us_path, html: {id: 'recaptcha-form'} do |f| %>
+  <div class="alert alert-danger" style="color: red;">
+    <% if flash[:error].present?%>
+      <%= flash[:error]%>
+    <%end%>
+  </div>
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+ 
+  <p>
+    <%= f.label :email %><br>
+    <%= f.email_field :email %>
+  </p>
+
+  <p>
+    <%= f.label :company_name %><br>
+    <%= f.text_field :company_name %>
+  </p>
+
+  <p>
+    <%= f.label :phone_number %><br>
+    <%= f.text_field :phone_number, pattern: "((\+*)((0[ -]+)*|(91 )*)(\d{12}+|\d{10}+))|\d{5}([- ]*)\d{6}" %>
+  </p>
+  <%= recaptcha_tags %>
+ 
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>
+
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/additional-methods.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+<script type="text/javascript">
+   // jQuery Validation Plugin not working for me. npm and other related tools are not present in my system. So just added the code, plugin is not working for me.
+  $( document ).ready(function() {
+    $("#recaptcha-form").validate({
+        rules: {
+          email: {
+            required: true,
+            email: true
+          },
+          name: {
+            required: true
+          },
+          phone_number: {
+            required: true,
+            number: true
+          }
+        },
+        messages:  {
+          email: {
+            required: "Please enter the email",
+            email: "Enter an email"
+          },
+          name: {
+            required: "Please enter the name"
+          },
+          phone_number: {
+            required: "Please enter the name"
+          },
+        }
+    });
+    jQuery.validator.setDefaults({
+      errorPlacement: function(error, element) {
+        error.appendTo(element.prev());
+      }
+    });
+  });
+</script>
